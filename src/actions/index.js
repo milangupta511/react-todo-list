@@ -12,29 +12,29 @@ export function addToDo(item){
  })
 }
 
-export function deleteToDo(index){
+export function deleteToDo(id){
 	return({
 		type:DELETE_TODO,
-		payload:index
+		payload:id
 	})
 }
 
-export function editToDo(term,index){
+export function editToDo(term,id){
 	return({
 		type:EDIT_TODO,
-		payload:{term,index}
+		payload:{term,id}
 	})
 }
-export function editItemMode(index){
+export function editItemMode(id){
 	return({
 		type:EDIT_ITEM_MODE,
-		payload:index
+		payload:id
 	})
 }
 
-export function toggleCompleteToDo(index){
+export function toggleCompleteToDo(id){
 	return({
 		type:TOGGLE_COMPLETE,
-		payload:index
+		payload:id
 	})
 }

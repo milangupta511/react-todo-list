@@ -9,7 +9,7 @@ class DeleteItem extends Component {
 	}
 	onDeleteClick(event){
 		event.preventDefault();
-		this.props.deleteToDo(this.props.index)
+		this.props.deleteToDo(this.props.id)
 	}
 	render(){
 		return(

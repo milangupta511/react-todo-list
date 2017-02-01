@@ -17,7 +17,7 @@ class EditItemForm extends Component{
 	}
 	onFormSubmit(event){
 		event.preventDefault();
-		this.props.editToDo(this.state.term, this.props.index)
+		this.props.editToDo(this.state.term, this.props.id)
 	}
 	render(){
 		return (

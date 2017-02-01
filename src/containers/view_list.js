@@ -13,25 +13,27 @@ class ViewList extends Component{
 		this.toggleComplete = this.toggleComplete.bind(this)
 	}
 	toggleComplete(id){
+		console.log(id)
 		this.props.toggleCompleteToDo(id);
 	}
 	renderRows(filterArr){
-		return filterArr.map((item,index)=>{
+		return filterArr.map((item)=>{
+			var id=item.id
 			if(item.isEditMode){
 				return {
-					id:index,
-					selectable:<input type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(index)}/>,
-					task: <EditItemForm term={item.term} index={index}/>,
+					id:item.id,
+					selectable:<input type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)}/>,
+					task: <EditItemForm term={item.term} id={id}/>,
 					edit:'',
 					delete:''
 				}	
 			}
 			return {
-					id:index,
-					selectable:<input type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(index)}/>,
+					id:item.id,
+					selectable:<input type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)}/>,
 					task:item.term,
-					edit:<EditItem index={index}/>,
-					delete: <DeleteItem index={index}/>
+					edit:<EditItem id={id}/>,
+					delete: <DeleteItem id={id}/>
 				}
 		})
 	}

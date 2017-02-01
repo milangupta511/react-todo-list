@@ -9,7 +9,7 @@ class EditItem extends Component {
 	}
 	onEditClick(event){
 		event.preventDefault();
-		this.props.editItemMode(this.props.index)
+		this.props.editItemMode(this.props.id)
 	}
 	render(){
 		return(
