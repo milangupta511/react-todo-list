@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {DataTable,TableHeader} from 'react-mdl';
+import {DataTable,TableHeader,Checkbox} from 'react-mdl';
 import EditItem from './edit_item';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -22,7 +22,7 @@ class ViewList extends Component{
 			if(item.isEditMode){
 				return {
 					id:item.id,
-					selectable:<input type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)}/>,
+					selectable:<Checkbox checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)} ripple/>,
 					task: <EditItemForm term={item.term} id={id}/>,
 					edit:'',
 					delete:''
@@ -30,7 +30,7 @@ class ViewList extends Component{
 			}
 			return {
 					id:item.id,
-					selectable:<input type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)}/>,
+					selectable:<Checkbox type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)} ripple/>,
 					task:item.term,
 					edit:<EditItem id={id}/>,
 					delete: <DeleteItem id={id}/>
