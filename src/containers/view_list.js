@@ -31,7 +31,7 @@ class ViewList extends Component{
 			return {
 					id:item.id,
 					selectable:<Checkbox type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)} ripple/>,
-					task:item.term,
+					task:<span className={item.isCompleted?"green":"red"}>{item.term}</span>,
 					edit:<EditItem id={id}/>,
 					delete: <DeleteItem id={id}/>
 				}

@@ -22,7 +22,7 @@ class EditItemForm extends Component{
 	render(){
 		return (
 			<form method="post" onSubmit={this.onFormSubmit}>
-				<input type="text" value={this.state.term} onChange={this.onInputEdit}/>
+				<input type="text" value={this.state.term} onChange={this.onInputEdit} autoFocus/>
 			</form>
 				)
 	}

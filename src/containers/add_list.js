@@ -12,7 +12,10 @@ class AddList extends Component{
 		}
 		onSubmitToDo(event){
 			event.preventDefault();
-			this.props.addToDo(this.state.term);
+
+			if(this.state.term.trim()!=='') {
+				this.props.addToDo(this.state.term);
+			}
 			this.setState({term:""})
 		}
 		onInputChange(event){
@@ -22,7 +25,7 @@ class AddList extends Component{
 
 		return(
 			<form className="add-todo-form" method="POST" onSubmit={this.onSubmitToDo}>
-				<input type="text" placeholder="Add your task here..." value={this.state.term} onChange={this.onInputChange}/>
+				<input type="text" placeholder="Add your task here..." value={this.state.term} onChange={this.onInputChange} autoFocus/>
 				<button type="submit" className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored add-todo-button">
   					<i className="material-icons">add</i>
 				</button>

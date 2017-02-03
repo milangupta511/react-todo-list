@@ -13,10 +13,12 @@
 thead{
 	display:none;
 }
-/*.add-todo-button{
-	left:90%;
-	top:-65px;
-}*/
+input{
+	outline:none;
+}
+a:hover{
+	text-decoration: none !important;
+}
 .mdl-data-table tbody{
 	width:100%;
 }
@@ -24,4 +26,10 @@ thead{
 	width:90%;
 	padding:10px;
 	font-size:1.5em;
+}
+.red{
+	color:#e44c4c;
+}
+.green{
+	color:#889e50;
 }
