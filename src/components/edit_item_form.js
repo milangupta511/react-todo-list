@@ -20,4 +20,4 @@ class EditItemForm extends Component{
 	}
 }
 
-export default (EditItemForm);
+export default EditItemForm;

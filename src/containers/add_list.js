@@ -35,7 +35,5 @@ class AddList extends Component{
 	}
 	
 }
-// function mapDispatchToProps(dispatch){
-// 	return bindActionCreators({addToDo}, dispatch);
-// }
+
 export default connect(null, {addToDo})(AddList)

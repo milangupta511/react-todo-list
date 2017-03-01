@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {DataTable,TableHeader,Checkbox} from 'react-mdl';
-import EditItem from './edit_item';
-import DeleteItem from './delete_item'
-import EditItemForm from './edit_item_form'
+import EditItem from '../components/edit_item';
+import DeleteItem from '../components/delete_item'
+import EditItemForm from '../components/edit_item_form'
 import {toggleCompleteToDo,editToDo,editItemMode, deleteToDo} from '../actions/index'
 class ViewList extends Component{
 	
