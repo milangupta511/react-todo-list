@@ -4,11 +4,11 @@ export const EDIT_TODO = 'EDIT_TODO'
 export const EDIT_ITEM_MODE = 'EDIT_ITEM_MODE'
 export const TOGGLE_COMPLETE ='TOGGLE_COMPLETE'
 
-export function addToDo(item){
+export function addToDo(id,term){
 	
  return({
  	type: ADD_TODO,
- 	payload:item
+ 	payload:{term, id}
  })
 }
 

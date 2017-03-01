@@ -6,6 +6,7 @@ import {addToDo} from '../actions/index';
 class AddList extends Component{
 	constructor(props){
 			super(props);
+			this.id=0;
 			this.onSubmitToDo=this.onSubmitToDo.bind(this);
 			this.onInputChange=this.onInputChange.bind(this)
 			this.state={term:""}
@@ -14,7 +15,8 @@ class AddList extends Component{
 			event.preventDefault();
 
 			if(this.state.term.trim()!=='') {
-				this.props.addToDo(this.state.term);
+				this.props.addToDo(this.id, this.state.term);
+				this.id++;
 			}
 			this.setState({term:""})
 		}

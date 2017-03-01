@@ -4,7 +4,7 @@ export default function(state = [], action){
 	switch(action.type){
 		case ADD_TODO :
 		//We can also use state.concat([action.payload.data]) as it dont mutate state
-			return [ ...state, {id: state.length, term:action.payload, isEditMode:false,isCompleted:false}]
+			return [ ...state, {id: action.payload.id, term:action.payload.term, isEditMode:false,isCompleted:false}]
 		case DELETE_TODO :
 			return stateArr.filter((item)=> item.id!==action.payload)
 			
