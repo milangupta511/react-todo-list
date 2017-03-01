@@ -1,60 +1,55 @@
 import React,{Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {filterToDo} from '../actions/index';
+import {filterToDo, visibilityToDoFilter} from '../actions/index';
 import ViewList from '../containers/view_list';
 import {Tabs,Tab,Badge} from 'react-mdl';
+import {SHOW_ALL,SHOW_PENDING,SHOW_COMPLETED} from '../config/visibility';
 
 class FilterList extends Component{
-	constructor(props) {
-        super(props)
-        this.state = { activeTab: 0 };
-        this.onTabChange=this.onTabChange.bind(this)
-        this.filterList = this.filterList.bind(this)
-        this.calcFilterCount =this.calcFilterCount.bind(this)
-
+	
+    onTabChange = (tabId) => {
+        const filters = [SHOW_ALL,SHOW_PENDING,SHOW_COMPLETED];
+        this.props.visibilityToDoFilter(filters[tabId]);
     }
-    onTabChange(tabId){
-    	this.setState({ activeTab: tabId })
-    }
-    filterList(activeTab, list){
-        switch(activeTab){
-            case 0:
-                return list
-            case 1:
-                return list.filter((item) => !item.isCompleted)
-            case 2:
-                return list.filter((item) => item.isCompleted)
-        }
-        return false
-    }
-    calcFilterCount(list){
-        return {
-            all: () => list.length,
-            pending: () => list.filter((item) => !item.isCompleted).length,
-            completed: () => list.filter((item) => item.isCompleted).length
+    filterList = (list) => {
+        return (activeTab) => {
+            switch(activeTab){
+                case 0:
+                    return list
+                case 1:
+                    return list.filter((item) => !item.isCompleted)
+                case 2:
+                    return list.filter((item) => item.isCompleted)
+            }
+            return false
         }
     }
     render() {
-        var filterListArr = this.filterList(this.state.activeTab, this.props.toDoList);
-        var filterCount = this.calcFilterCount(this.props.toDoList)
+        const {visibilityFilter, toDoList} = this.props,
+        filterListTab = this.filterList(toDoList)
 
         return (
             <div className="demo-tabs">
-                <Tabs activeTab={this.state.activeTab} onChange={this.onTabChange} ripple>
-                    <Tab><Badge text={filterCount.all()}>All</Badge></Tab>
-                    <Tab><Badge text={filterCount.pending()}>Pending</Badge></Tab>
-                    <Tab><Badge text={filterCount.completed()}>Completed</Badge></Tab>
+                <Tabs activeTab={visibilityFilter} onChange={this.onTabChange} ripple>
+                    <Tab><Badge text={filterListTab(0).length}>All</Badge></Tab>
+                    <Tab><Badge text={filterListTab(1).length}>Pending</Badge></Tab>
+                    <Tab><Badge text={filterListTab(2).length}>Completed</Badge></Tab>
                 </Tabs>
                 <section>
-                    <div className="content"><ViewList filterArr={filterListArr}/></div>
+                    <div className="content"><ViewList filterArr={filterListTab(visibilityFilter)}/></div>
                 </section>
             </div>    
         );
     }
 }
 
-function mapStateToProps(state){
-	return {toDoList:state.toDoList}
+const mapStateToProps = ({toDoList, visibilityFilter}) => {
+    let filterToId = {
+        SHOW_ALL:0,
+        SHOW_PENDING:1,
+        SHOW_COMPLETED:2
+    } 
+	return {toDoList, visibilityFilter:filterToId[visibilityFilter] }
 }
-export default connect(mapStateToProps)(FilterList)
+export default connect(mapStateToProps, {visibilityToDoFilter})(FilterList)

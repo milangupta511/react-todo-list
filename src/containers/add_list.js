@@ -7,28 +7,27 @@ class AddList extends Component{
 	constructor(props){
 			super(props);
 			this.id=0;
-			this.onSubmitToDo=this.onSubmitToDo.bind(this);
-			this.onInputChange=this.onInputChange.bind(this)
-			this.state={term:""}
+	}
+	onSubmitToDo = (event) => {
+		event.preventDefault();
+		let {value} =this.inputText
+		if(value.trim()!=='') {
+			this.props.addToDo(this.id, value);
+			this.id++;
 		}
-		onSubmitToDo(event){
-			event.preventDefault();
-
-			if(this.state.term.trim()!=='') {
-				this.props.addToDo(this.id, this.state.term);
-				this.id++;
-			}
-			this.setState({term:""})
-		}
-		onInputChange(event){
-			this.setState({term:event.target.value});
-		}
+		this.inputText.value = ''  //value='' wont work
+	}
+	
 	render(){
 
 		return(
 			<form className="add-todo-form" method="POST" onSubmit={this.onSubmitToDo}>
-				<input type="text" placeholder="Add your task here..." value={this.state.term} onChange={this.onInputChange} autoFocus/>
-				<button type="submit" className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored add-todo-button">
+				<input type="text"
+					   ref={(input) => {this.inputText = input}} //called first time when the input is mounted
+					   placeholder="Add your task here..."
+					   autoFocus />
+				<button type="submit"
+						className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored add-todo-button">
   					<i className="material-icons">add</i>
 				</button>
 			</form>
@@ -36,7 +35,7 @@ class AddList extends Component{
 	}
 	
 }
-function mapDispatchToProps(dispatch){
-	return bindActionCreators({addToDo}, dispatch);
-}
-export default connect(null, mapDispatchToProps)(AddList)
+// function mapDispatchToProps(dispatch){
+// 	return bindActionCreators({addToDo}, dispatch);
+// }
+export default connect(null, {addToDo})(AddList)

@@ -1,44 +1,40 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {DataTable,TableHeader,Checkbox} from 'react-mdl';
 import EditItem from './edit_item';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import DeleteItem from './delete_item'
 import EditItemForm from './edit_item_form'
-import {toggleCompleteToDo} from '../actions/index'
+import {toggleCompleteToDo,editToDo,editItemMode, deleteToDo} from '../actions/index'
 class ViewList extends Component{
-	constructor(props){
-		super(props)
-		this.renderRows = this.renderRows.bind(this);
-		this.toggleComplete = this.toggleComplete.bind(this)
-	}
-	toggleComplete(id){
-		console.log(id)
+	
+	toggleComplete = (id) => {
 		this.props.toggleCompleteToDo(id);
 	}
-	renderRows(filterArr){
+
+	renderRows = (filterArr) => {
 		return filterArr.map((item)=>{
-			var id=item.id
-			if(item.isEditMode){
+			let {isCompleted,id,term,isEditMode} = item;
+			let {editToDo, editItemMode, deleteToDo} = this.props
+			if(isEditMode){
 				return {
-					id:item.id,
-					selectable:<Checkbox checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)} ripple/>,
-					task: <EditItemForm term={item.term} id={id}/>,
+					id:id,
+					selectable:<Checkbox checked={isCompleted} onChange={() => this.toggleComplete(id)} ripple/>,
+					task: <EditItemForm term={term} id={id} editToDo={editToDo}/>,
 					edit:'',
 					delete:''
 				}	
 			}
 			return {
-					id:item.id,
-					selectable:<Checkbox type="checkbox" checked={item.isCompleted} onChange={() => this.toggleComplete(item.id)} ripple/>,
-					task:<span className={item.isCompleted?"green":"red"}>{item.term}</span>,
-					edit:<EditItem id={id}/>,
-					delete: <DeleteItem id={id}/>
+					id:id,
+					selectable:<Checkbox type="checkbox" checked={isCompleted} onChange={() => this.toggleComplete(id)} ripple/>,
+					task:<span className={isCompleted?"green":"red"}>{term}</span>,
+					edit:<EditItem id={id} editItemMode={editItemMode}/>,
+					delete: <DeleteItem id={id} deleteToDo = {deleteToDo} />
 				}
 		})
 	}
 	render(){
-		var filterArr = this.props.filterArr
+		let {filterArr} = this.props;
 		return (
 			<DataTable
 			    shadow={0}
@@ -46,15 +42,11 @@ class ViewList extends Component{
 			    rows={this.renderRows(filterArr)}
 			>
 				<TableHeader name="selectable" tooltip="select this">Select</TableHeader>
-				<TableHeader name="task" tooltip="The amazing material name">Task</TableHeader>
-	    		<TableHeader name="edit" tooltip="Number of materials">Edit Task</TableHeader>
-	    		<TableHeader name="delete" tooltip="Price pet unit">Delete Task</TableHeader>
+				<TableHeader name="task" tooltip="The task name">Task</TableHeader>
+	    		<TableHeader name="edit" tooltip="Edit the task">Edit Task</TableHeader>
+	    		<TableHeader name="delete" tooltip="Delete the task">Delete Task</TableHeader>
 			</DataTable>)
 	}
 }
 
-function mapDispatchToProps(dispatch){
-	return bindActionCreators({toggleCompleteToDo}, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(ViewList)
+export default connect(null, {toggleCompleteToDo ,editToDo,editItemMode, deleteToDo})(ViewList)

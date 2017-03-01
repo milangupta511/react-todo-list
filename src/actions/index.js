@@ -3,15 +3,20 @@ export const DELETE_TODO = 'DELETE_TODO'
 export const EDIT_TODO = 'EDIT_TODO'
 export const EDIT_ITEM_MODE = 'EDIT_ITEM_MODE'
 export const TOGGLE_COMPLETE ='TOGGLE_COMPLETE'
-
+export const VISIBILITY_FILTER = 'VISIBILITY_FILTER';
 export function addToDo(id,term){
 	
  return({
  	type: ADD_TODO,
- 	payload:{term, id}
+ 	term,id
  })
 }
-
+export function visibilityToDoFilter(filter){
+	return ({
+		type: VISIBILITY_FILTER,
+		payload: filter
+	})
+}
 export function deleteToDo(id){
 	return({
 		type:DELETE_TODO,
@@ -22,7 +27,7 @@ export function deleteToDo(id){
 export function editToDo(term,id){
 	return({
 		type:EDIT_TODO,
-		payload:{term,id}
+		term,id
 	})
 }
 export function editItemMode(id){
